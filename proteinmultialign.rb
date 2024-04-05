@@ -17,7 +17,6 @@ class SINGLEMultiGFF
 
   def extractpafSingle(fastafile, gffalignment)
       fasta = File.read(fastafile).readlines
-      alignment = File.read(gffalignment).readlines
       sequenceids = []
       sequencechar = []
       ParseFasta::SeqFile.open(fasta).each_record do | iter |
@@ -31,15 +30,15 @@ class SINGLEMultiGFF
       mRNAid_stop_position = []
       mRNAgffids = []
       for i in 0..gffreadmain.length
-        mRNAidslocal.push(gffreadmain[i].to_s.strip.split[2]) \
+        mRNAidlocals.push(gffreadmain[i].to_s.strip.split[2]) \
                                   if gffread[i].to_s.strip.split[2] == "mRNA"
       end
       for i in 0..gffreadmain.length
-        mRNAids_start_position.push(gffreadmain[i].to_s.strip.split[3]) \
+        mRNAid_start_position.push(gffreadmain[i].to_s.strip.split[3]) \
                                   if gffread[i].to_s.strip.split[2] == "mRNA"
       end
       for i in 0..gffreadmain.length
-        mRNAids_stop_position.push(gffreadmain[i].to_s.strip.split[4]) \
+        mRNAid_stop_position.push(gffreadmain[i].to_s.strip.split[4]) \
                                  if gffread[i].to_s.strip.split[2] == "mRNA"
       end
       for i in 0..gffreadmain.length
@@ -49,17 +48,16 @@ class SINGLEMultiGFF
       mRNAsequenceiter = {}
       mRNAsequencesplice = []
       for i in 0..mRNAid_start_positions.length
-         mRNsequenceiter[sequenceids[i]] = [mRNAid_start_positions[i], mRNAid_stop_positions]
+         mRNAsequenceiter[sequenceids[i]] = [mRNAid_start_positions[i], mRNAid_stop_positions]
       end
       for i in 0..mRNAid_start_positions.length
-        mRNAsequencesplice[[sequenceids[i],mRNAidslocal[i]] = sequencechar[i].to_s.slice(mRNAid_start_positons[i], mRNAid_end_positions[i])
+        mRNAsequencesplice[[sequenceids[i],mRNAidslocal[i]] = sequencechar[i].to_s.slice(mRNAid_start_positons[i], mRNAid_end_positions[i]) \
               if sequenceids[i] == mRNAgffids[i]
       end
   end
 
   def extractpafMulti(fastafile, multigff, outputfasta)
       fasta = File.read(fastafile).readlines
-      alignment = File.read(gffalignment).readlines
       sequenceids = []
       sequencechar = []
       ParseFasta::SeqFile.open(fasta).each_record do | iter |
@@ -89,12 +87,11 @@ class SINGLEMultiGFF
       end
       multifastaiterinfo = {}
       multifastaseqsplice = {}
-      multifastaupstream = []
       for i in 0..multigffseqids.length
          multifastaiterinfo[multigffseqids[i]] = [multigffmRNAstart[i], multigffmRNAend[i]]
       end
       for i in 0..multigffmRNAstart.length
-        multifastseqsplice[sequenceids[i]] = sequencechar[i].slice(multigffmRNAstart[i].to_i, multigffmRNAend[i].to_i) \
+        multifastaseqsplice[sequenceids[i]] = sequencechar[i].slice(multigffmRNAstart[i].to_i, multigffmRNAend[i].to_i) \
                        if sequenceids[i].to_s == multigffseqids[i].to_s
       end
   end
