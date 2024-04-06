@@ -46,7 +46,7 @@ class SINGLEMultiGFF
                                  if gffread[i].to_s.strip.split[2] == "mRNA"
       end
       mRNAsequenceiter = {}
-      mRNAsequencesplice = []
+      mRNAsequencesplice = {}
       for i in 0..mRNAid_start_positions.length
          mRNAsequenceiter[sequenceids[i]] = [mRNAid_start_positions[i], mRNAid_stop_positions]
       end
