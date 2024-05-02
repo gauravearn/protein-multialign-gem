@@ -4,7 +4,7 @@
 - it also provides the class based functions for the upstream and downstream motif analysis.
 - sample files and the code execution instructions later today. 
 
-Gaurav Sablok \
+Gaurav \
 Academic Staff Member \
 Bioinformatics \
 Institute for Biochemistry and Biology \
